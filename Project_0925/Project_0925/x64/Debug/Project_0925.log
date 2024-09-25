@@ -1,0 +1,10 @@
+﻿  main2.cpp
+C:\github\Programing2024\Project_0925\main2.cpp(11,10): warning C4477: 'scanf_s' : 서식 문자열 '%c'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 3의 형식이 'size_t'입니다.
+      C:\github\Programing2024\Project_0925\main2.cpp(11,10):
+      이 인수는 버퍼 크기로 사용됩니다.
+  
+C:\github\Programing2024\Project_0925\main2.cpp(11,10): warning C4477: 'scanf_s' : 서식 문자열 '%s'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 5의 형식이 'size_t'입니다.
+      C:\github\Programing2024\Project_0925\main2.cpp(11,10):
+      이 인수는 버퍼 크기로 사용됩니다.
+  
+  Project_0925.vcxproj -> C:\github\Programing2024\Project_0925\x64\Debug\Project_0925.exe

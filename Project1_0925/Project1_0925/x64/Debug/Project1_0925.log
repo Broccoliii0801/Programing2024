@@ -1,0 +1,4 @@
+﻿  main_00.cpp
+C:\github\Programing2024\Project1_0925\main_00.cpp(13,10): warning C4477: 'scanf_s' : 서식 문자열 '%lf'에 'double *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'const char *'입니다.
+C:\github\Programing2024\Project1_0925\main_00.cpp(14,1): error C4700: 초기화되지 않은 'base' 지역 변수를 사용했습니다.
+C:\github\Programing2024\Project1_0925\main_00.cpp(14,1): error C4700: 초기화되지 않은 'height' 지역 변수를 사용했습니다.
