@@ -20,11 +20,13 @@ int main()
 			printf("%d * %d = %d\n", a, b, a * b);
 			break;
 	case '/':
-			if (b != 0)
-				printf("%d / %d = %d\n", a, b, a / b);
-			else
-				printf("0으로 나눌 수 없습니다.\n");
-			break;
+	  {
+		if (b != 0)
+			printf("%d / %d = %d\n", a, b, a / b);
+		else
+			printf("0으로 나눌 수 없습니다.\n");
+	   }
+		break;
 			default:
 				printf("잘못된 연산자입니다.\n");
 	}
