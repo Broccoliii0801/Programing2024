@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\github\Programing2024\241014_pra\main.cpp(10,10): warning C4477: 'scanf_s' : 서식 문자열 '%c'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 3의 형식이 'size_t'입니다.
+      C:\github\Programing2024\241014_pra\main.cpp(10,10):
+      이 인수는 버퍼 크기로 사용됩니다.
+  
+  241014_pra.vcxproj -> C:\github\Programing2024\241014_pra\x64\Debug\241014_pra.exe
