@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int Celtofah(double celsius)   //¼·¾¾¸¦  È­¾¾·Î º¯È¯ÇÏ´Â ÇÔ¼ö
+{
+	double fah = (celsius * 9.0 / 5.0) + 32.0;
+	printf("È­¾¾¿Âµµ: %.2f F\n", fah);
+	return 0;
+}
+
+int Fahtocel(double fahrenheit)  //È­¾¾¸¦ ¼·¾¾·Î º¯È¯ÇÏ´Â ÇÔ¼ö
+{
+	double cel = (fahrenheit - 32.0) * 5.0 / 9.0;
+	printf("¼·¾¾¿Âµµ: %.2f C\n", cel);
+	return 0;
+}
+int main()
+{
+	int choice;
+	double temp;
+
+	printf("¿Âµµº¯È¯\n");
+	printf("1.¼·¾¾ > È­¾¾\n");
+	printf("2.È­¾¾ > ¼·¾¾\n");
+	printf("¼±ÅÃ(1 ¶Ç´Â 2) :");
+	scanf_s("%d", &choice);
+
+	if (choice == 1)
+	{
+		printf("¼·¾¾ ¿Âµµ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		scanf_s("%lf", &temp);
+		Celtofah(temp);
+	}
+	else if (choice == 2)
+	{
+		printf("È­¾¾ ¿Âµµ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		scanf_s("%lf", &temp);
+		Fahtocel(temp);
+	}
+	else
+	{
+		printf("¿À·ùÀÔ´Ï´Ù.\n");
+	}
+
+	return 0;
+}
