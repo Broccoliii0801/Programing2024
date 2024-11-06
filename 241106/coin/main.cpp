@@ -43,12 +43,12 @@ int main(void)
     // initializing variables
     int num_sum_fwdflip = 0;
     int num_sum_bwdflip = 0;
-    double meanfwdflip;
-    double meanbwdflip;
-    double dvarfwdflip = 0.0;
-    double dvarbwdflip = 0.0;
-    double dstdevfwdflip = 0.0;
-    double dstdevbwdflip = 0.0;
+    double mean_fwd_flip;
+    double mean_bwd_flip;
+    double dvar_fwd_flip = 0.0;
+    double dvar_bwd_flip = 0.0;
+    double dstdev_fwd_flip = 0.0;
+    double dstdev_bwd_flip = 0.0;
 
     // finite loop
     for (unsigned int i = 0; i < num_flip; i++)
@@ -71,22 +71,22 @@ int main(void)
     double probability_bwd = (double)num_sum_bwdflip / num_flip * 100.0;
 
     // 평균 계산
-    meanfwdflip = (double)num_sum_fwdflip / num_flip;
-    meanbwdflip = (double)num_sum_bwdflip / num_flip;
+    mean_fwd_flip = (double)num_sum_fwdflip / num_flip;
+    mean_bwd_flip = (double)num_sum_bwdflip / num_flip;
 
     // 분산 계산
-    dvarfwdflip = meanfwdflip * (1 - meanfwdflip);
-    dvarbwdflip = meanbwdflip * (1 - meanbwdflip);
+    dvar_fwd_flip = mean_fwd_flip * (1 - mean_fwd_flip);
+    dvar_bwd_flip = mean_bwd_flip * (1 - mean_bwd_flip);
 
     // 표준 편차 계산
-    dstdevfwdflip = sqrt(dvarfwdflip);
-    dstdevbwdflip = sqrt(dvarbwdflip);
+    dstdev_fwd_flip = sqrt(dvar_fwd_flip);
+    dstdev_bwd_flip = sqrt(dvar_bwd_flip);
 
     // 결과 출력
     printf("앞면이 나온 횟수: %d, 확률: %.2f%%\n", num_sum_fwdflip, probability_fwd);
     printf("뒷면이 나온 횟수: %d, 확률: %.2f%%\n", num_sum_bwdflip, probability_bwd);
-    printf("앞면의 분산: %.4f, 표준 편차: %.4f\n", dvarfwdflip, dstdevfwdflip);
-    printf("뒷면의 분산: %.4f, 표준 편차: %.4f\n", dvarbwdflip, dstdevbwdflip);
+    printf("앞면의 분산: %.4f, 표준 편차: %.4f\n", dvar_fwd_flip, dstdev_fwd_flip);
+    printf("뒷면의 분산: %.4f, 표준 편차: %.4f\n", dvar_bwd_flip, dstdev_bwd_flip);
 
     return 0;
 }
