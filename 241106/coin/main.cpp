@@ -17,7 +17,7 @@ void GenRandSeed()
     srand((unsigned int)(time(NULL)));
 }
 
-// 랜덤 숫자 생성
+// generating the random number
 unsigned int GenRandFlipCoin(unsigned int nRange)
 {
     unsigned int nRes = 0;
