@@ -2,68 +2,68 @@
 #include <stdlib.h>
 #include <time.h>
 
-void GenerateArray(int arr[], int size)   //배열 생성
+void GenerateArray(double* arr, int size, double min, double max)
 {
     int i = 0;
     while (i < size)
     {
-        arr[i] = rand() % 101;      // 0~100 사이의 랜덤 정수 생성
+        *(arr + i) = (max - min) * ((double)rand() / RAND_MAX) + min; // 포인터로 배열 요소 접근
         i++;
     }
 }
 
-void PrintArray(int arr[], int size)    //배열 출력
+void CalcSortArray(double* arr, int size, int Ascending)   // 오름/내림차순 정렬 함수
+{
+    int i = 0;
+    while (i < size - 1)
+    {
+        int j = 0;
+        while (j < size - 1 - i)
+        {
+            if ((Ascending && *(arr + j) > *(arr + j + 1)) || (!Ascending && *(arr + j) < *(arr + j + 1)))
+            {
+                double temp = *(arr + j);   // 포인터로 자리 교환
+                *(arr + j) = *(arr + j + 1);
+                *(arr + j + 1) = temp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+void PrintArray(double* arr, int size)
 {
     int i = 0;
     while (i < size)
     {
-        printf("%d ", arr[i]);
+        printf("%.2f ", *(arr + i)); // 포인터로 배열 요소 출력
         i++;
     }
     printf("\n");
 }
 
-void CalcEvenOddArray(int arr[], int size, int even[], int* evenCount, int odd[], int* oddCount)    // 짝수/홀수를 분리하는 함수
-{
-    *evenCount = 0; // 짝수 개수 초기화
-    *oddCount = 0;  // 홀수 개수 초기화
-
-    int i = 0;
-    while (i < size)
-    {
-        if (arr[i] % 2 == 0)  // 짝수 검사
-        { 
-            even[*evenCount] = arr[i];
-            (*evenCount)++;
-        }
-        else  // 홀수 검사
-        { 
-            odd[*oddCount] = arr[i];
-            (*oddCount)++;
-        }
-        i++;
-    }
-}
-
 int main()
 {
-    int arr[10], even[10], odd[10];
-    int evenCount, oddCount;
+    srand(time(NULL)); // 랜덤 함수 초기화
 
-    srand(time(0));        // 배열값 초기화
+    const int size = 10; // 배열 크기
+    double arr[size];
+    double min = -100.0, max = 100.0; // 값의 범위 설정
 
-    GenerateArray(arr, 10);
+    GenerateArray(arr, size, min, max);  // 배열 생성
 
-    printf("출력 배열:\n");
-    PrintArray(arr, 10);
+    printf("생성된 배열:\n");
+    PrintArray(arr, size);  // 생성된 배열 출력
 
-    CalcEvenOddArray(arr, 10, even, &evenCount, odd, &oddCount);    // 짝수/홀수 분리
+    int option;   // 정렬 옵션 선택
+    printf("정렬 옵션을 선택하세요 (1: 오름차순, 2: 내림차순): ");
+    scanf_s("%d", &option);
 
-    printf("짝수 :\n");             // 짝수 출력
-    PrintArray(even, evenCount);
+    CalcSortArray(arr, size, option == 1); // 정렬 실행
 
-    printf("홀수 :\n");             // 홀수 출력
-    PrintArray(odd, oddCount);
+    printf("정렬된 배열:\n");
+    PrintArray(arr, size); // 정렬된 배열 출력
 
     return 0;
 }
