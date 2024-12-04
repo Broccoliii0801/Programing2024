@@ -7,7 +7,7 @@ void GenerateArray(double* arr, int size, double min, double max)
     int i = 0;
     while (i < size)
     {
-        *(arr + i) = (max - min) * ((double)rand() / RAND_MAX) + min; // 포인터로 배열 요소 접근
+        *(arr + i) = (max - min) * ((double)rand() / RAND_MAX) + min; 
         i++;
     }
 }
@@ -22,7 +22,7 @@ void CalcSortArray(double* arr, int size, int Ascending)   // 오름/내림차순 정렬
         {
             if ((Ascending && *(arr + j) > *(arr + j + 1)) || (!Ascending && *(arr + j) < *(arr + j + 1)))
             {
-                double temp = *(arr + j);   // 포인터로 자리 교환
+                double temp = *(arr + j);   // 자리 교환
                 *(arr + j) = *(arr + j + 1);
                 *(arr + j + 1) = temp;
             }
@@ -37,7 +37,7 @@ void PrintArray(double* arr, int size)
     int i = 0;
     while (i < size)
     {
-        printf("%.2f ", *(arr + i)); // 포인터로 배열 요소 출력
+        printf("%.2f ", *(arr + i)); 
         i++;
     }
     printf("\n");
