@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void GenerateArray(float arr[], int size)
+void GenerateArray(float *arr, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -10,7 +10,7 @@ void GenerateArray(float arr[], int size)
     }
 }
 
-void PrintArray(float arr[], int size)          // 배열 출력 함수
+void PrintArray(float *arr, int size)          // 배열 출력 함수
 {
     for (int i = 0; i < size; i++)
     {
@@ -19,7 +19,7 @@ void PrintArray(float arr[], int size)          // 배열 출력 함수
     printf("\n");
 }
 
-void CalcInverseArray(float arr[], int size)       // 배열을 역순으로 바꿔주는 함수
+void CalcInverseArray(float *arr, int size)       // 배열을 역순으로 바꿔주는 함수
 {
     for (int i = 0; i < size / 2; i++)
     {
