@@ -8,9 +8,6 @@
 #define coin_fwd_status 0
 #define coin_bwd_status 1
 
-#define INITSTATUS 100
-#define END_COND 999
-
 void GenRandSeed()
 {
     // generating the random number using the time seed
@@ -87,6 +84,5 @@ int main(void)
     printf("뒷면이 나온 횟수: %d, 확률: %.2f%%\n", num_sum_bwdflip, probability_bwd);
     printf("앞면의 분산: %.4f, 표준 편차: %.4f\n", dvar_fwd_flip, dstdev_fwd_flip);
     printf("뒷면의 분산: %.4f, 표준 편차: %.4f\n", dvar_bwd_flip, dstdev_bwd_flip);
-
     return 0;
 }
