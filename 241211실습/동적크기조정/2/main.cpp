@@ -17,16 +17,16 @@ void calculate(int* arr, int size, double* sum, double* mean, double* variance, 
 
 int main()
 {
-    int* arr = NULL, size, extra;
+    int* arr = NULL, size, extra;  // NULL로 동적 메모리를 할당하기 전에 초기화
 
     printf("초기 배열 크기 입력: ");
     scanf_s("%d", &size);
     
-    arr = (int *)malloc(size * sizeof(int));
+    arr = (int *)malloc(size * sizeof(int));  // 입력받은 크기에 따라 동적 메모리 할당, 포인터를 int *로 변환
     if (!arr)
     {
         printf("메모리 할당 실패\n");
-        return 1;
+        return 1;    // 할당 실패 시 종료
     }
 
     printf("%d개의 정수 입력: ", size);
@@ -39,11 +39,11 @@ int main()
     printf("\n추가할 배열 크기 입력: ");
     scanf_s("%d", &extra);
 
-   int *temp = (int *)realloc(arr, (size + extra) * sizeof(int));
+   int *temp = (int *)realloc(arr, (size + extra) * sizeof(int));  // realloc으로 기존 배열 확장, 
     if (!temp)
     {
         printf("메모리 재할당 실패\n");
-        free(arr);
+        free(arr);   // 기존 메모리 해제
         return 1;
     }
     arr = temp;
@@ -74,6 +74,6 @@ int main()
     printf("새로운 분산: %.2f\n", finalvariance);
     printf("새로운 표준 편차: %.2f\n", finalstd_dev);
 
-    free(arr);
+    free(arr);   // 동적 메모리 해제
     return 0;
 }
