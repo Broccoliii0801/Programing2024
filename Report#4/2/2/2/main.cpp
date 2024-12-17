@@ -38,7 +38,7 @@ void calculateStats(int* arr, int size)                                // 통계 �
 int main()
 {
     srand(time(NULL));
-    int numbers[100], subset[10], min, max;
+    int numbers[100], choice[10], min, max;
 
     printf("최소값과 최대값을 입력하세요 (예: 1 100): ");
     scanf_s("%d %d", &min, &max);
@@ -51,12 +51,12 @@ int main()
 
     genRandNum(numbers, 100, min, max);
 
-    for (int i = 0; i < 10; i++) subset[i] = numbers[i];       // 10개의 정수 추출
+    for (int i = 0; i < 10; i++) choice[i] = numbers[i];       // 10개의 정수 추출
 
     printf("추출된 정수: ");
-    for (int i = 0; i < 10; i++) printf("%d ", subset[i]);
+    for (int i = 0; i < 10; i++) printf("%d ", choice[i]);
     printf("\n");
 
-    calculateStats(subset, 10);
+    calculateStats(choice, 10);
     return 0;
 }
