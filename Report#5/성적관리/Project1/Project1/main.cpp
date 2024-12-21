@@ -132,6 +132,21 @@ void calculateOverallRank(Student* students1, int count1, Student* students2, in
     }
 }
 
+void calculateClassAverage(Student* students, int count, float* classAverage)      // 평균점수 계산 후 classAverage에 저장
+{
+    if (count == 0)                                                                // 분반에 학생 없는 경우 처리, 0이면 함수 종료
+    {
+        *classAverage = 0.0f;
+        return;
+    }
+    float total = 0.0f;
+    for (int i = 0; i < count; i++)                                                // 배열의 모든 학생의 평균 점수 합산
+    {
+        total += students[i].average;
+    }
+    *classAverage = total / count;                                                 // 분반의 전체 평균점수를 classAverage 포인터에 저장
+}  
+
 void writeClassResults(const char* filename, Student* students1, int count1, float avg1, Student* students2, int count2, float avg2)
 // 두 분반의 평균점수와 전체 평균점수를 파일에 저장
 {
@@ -145,7 +160,7 @@ void writeClassResults(const char* filename, Student* students1, int count1, flo
 
     float overallAverage = (count1 + count2 > 0) ? (avg1 * count1 + avg2 * count2) / (count1 + count2) : 0.0f;
     // 두 분반의 평균점수를 기반으로 전체 평균 점수 계산, 학생 수가 0보다 큰 경우에만 계산, 학생 수가 0이면 평균 점수 0으로 설정
-    int rank1 = avg1 > avg2 ? 1 : 2;        // 첫번째 분반의 평균 점수를 두번째 분반의 점수와 비교
+    int rank1 = avg1 > avg2 ? 1 : 2;      // 첫번째 분반의 평균 점수를 두번째 분반의 점수와 비교
     int rank2 = avg1 > avg2 ? 2 : 1;
 
     fprintf(file, "Class 1 Average: %.2f (%d)\n", avg1, rank1);
@@ -154,21 +169,6 @@ void writeClassResults(const char* filename, Student* students1, int count1, flo
 
     fclose(file);
     printf("Successfully wrote file: %s\n", filename);
-}
-
-void calculateClassAverage(Student* students, int count, float* classAverage)      // 평균점수 계산 후 classAverage에 저장
-{
-    if (count == 0)                     // 분반에 학생 없는 경우 처리, 0이면 함수 종료
-    {
-        *classAverage = 0.0f;
-        return;
-    }
-    float total = 0.0f;
-    for (int i = 0; i < count; i++)     // 배열의 모든 학생의 평균 점수 합산
-    {
-        total += students[i].average;
-    }
-    *classAverage = total / count;      // 분반의 전체 평균점수를 classAverage 포인터에 저장
 }
 
 int main()
@@ -185,7 +185,7 @@ int main()
     readFile("C:\\Users\\didgm\\Documents\\GitHub\\Programing2024\\Report#5\\성적관리\\students_1.txt", students1, &count1);  // 파일에서 데이터를 읽은 후 students1 배열에 저장
     readFile("C:\\Users\\didgm\\Documents\\GitHub\\Programing2024\\Report#5\\성적관리\\students_2.txt", students2, &count2);  // 파일에서 데이터를 읽은 후 students2 배열에 저장
 
-    if (count1 == 0 || count2 == 0)   // 두 파일 중 하나라도 데이터가 없으면 프로그램 종료
+    if (count1 == 0 || count2 == 0)                                                                                           // 두 파일 중 하나라도 데이터가 없으면 프로그램 종료
     {
         printf("Error: One or more input files are empty or unreadable.\n");
         free(students1); // 동적 메모리 해제
@@ -193,19 +193,19 @@ int main()
         return EXIT_FAILURE;
     }
 
-    calculateAverage(students1, count1);    // 학생 평균 점수 계산 후 저장
+    calculateAverage(students1, count1);                                                                                      // 학생 평균 점수 계산 후 저장
     calculateAverage(students2, count2);
 
-    calculateRank(students1, count1);       // 학생 분반 내 등수 계산 후 저장
+    calculateRank(students1, count1);                                                                                         // 학생 분반 내 등수 계산 후 저장
     calculateRank(students2, count2);
 
-    calculateOverallRank(students1, count1, students2, count2);  // 학생 전체 등수 계산 후 저장
+    calculateOverallRank(students1, count1, students2, count2);                                                               // 학생 전체 등수 계산 후 저장
 
     writeFile("C:\\Users\\didgm\\Documents\\GitHub\\Programing2024\\Report#5\\성적관리\\students_1_results.txt", students1, count1);  // 첫 번째 분반의 결과 데이터 파일로 저장
     writeFile("C:\\Users\\didgm\\Documents\\GitHub\\Programing2024\\Report#5\\성적관리\\students_2_results.txt", students2, count2);  // 두 번째 분반의 결과 데이터 파일로 저장
 
-    float class1Average = 0.0f, class2Average = 0.0f;           // 두 분반의 평균 점수를 저장할 변수 선언 후 초기화
-    calculateClassAverage(students1, count1, &class1Average);   // 분반의 평균 점수 계산 후 저장
+    float class1Average = 0.0f, class2Average = 0.0f;                                                                                 // 두 분반의 평균 점수를 저장할 변수 선언 후 초기화
+    calculateClassAverage(students1, count1, &class1Average);                                                                         // 분반의 평균 점수 계산 후 저장
     calculateClassAverage(students2, count2, &class2Average);
 
     writeClassResults("C:\\Users\\didgm\\Documents\\GitHub\\Programing2024\\Report#5\\성적관리\\class_results.txt", students1, count1, class1Average, students2, count2, class2Average);
