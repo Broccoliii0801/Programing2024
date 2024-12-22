@@ -20,14 +20,11 @@ void display_coins(Coin coins[], int size) {
     {
         double change_percent = 0.0;
 
-        // 구매 가격과 현재 가격 비교하여 변동률 계산
-        if (coins[i].last_buy_price > 0)
+        if (coins[i].last_buy_price > 0)                       // 구매 가격 대비 변동률 계산
         {
             change_percent = ((coins[i].price - coins[i].last_buy_price) / coins[i].last_buy_price) * 100.0;
         }
-
-        // 코인 정보 출력
-        printf("%d. %s - $%.2f (You own: %.4f) [%+.2f%% change]\n",
+        printf("%d. %s - $%.2f (You own: %.4f) [%+.2f%% change from last buy price]\n",
             i + 1, coins[i].name, coins[i].price, coins[i].amount_owned, change_percent);
     }
 }
@@ -39,19 +36,18 @@ void update_prices(Coin coins[], int size) {
     {
         double change;
 
-        coins[i].previous_price = coins[i].price;          // 이전 가격 저장
-
-        if (strcmp(coins[i].name, "Ripple") == 0)          // 리플 코인은 -100%에서 +100% 변동
+        if (strcmp(coins[i].name, "Ripple") == 0)    // 리플 코인은 더 큰 변동 폭을 설정
         {
-            change = ((rand() % 201) - 100) / 100.0;       // -100%에서 +100%
+            change = ((rand() % 401) - 200) / 100.0; // -200%에서 +200%
         }
-        else {
-            change = ((rand() % 21) - 10) / 100.0;         // 다른 코인들은 -10%에서 +10%
+        else
+        {
+            change = ((rand() % 21) - 10) / 100.0;   // 다른 코인은 -10%에서 +10%
         }
 
-        coins[i].price += coins[i].price * change;         // 가격 업데이트
+        coins[i].price += coins[i].price * change;
 
-        if (coins[i].price < 1.0)                          // 최소 가격 제한
+        if (coins[i].price < 1.0)                    // 최소 가격 제한
         {
             coins[i].price = 1.0; 
         }
@@ -59,6 +55,7 @@ void update_prices(Coin coins[], int size) {
 
     printf("\nPrices updated!\n");
 }
+
 
 
 
@@ -109,21 +106,25 @@ void sell_coin(Coin coins[], int size, double* cash) {
 
     display_coins(coins, size);
 
-    printf("\nEnter the coin number to sell: "); 
+    printf("\nEnter the coin number to sell: ");
     if (scanf_s("%d", &choice) != 1 || choice < 1 || choice > size)
     {
         printf("Invalid input. Please enter a valid coin number.\n");
         return;
     }
-    choice--;                                                          // 배열 인덱스에 맞추기 위해 1 감소
+    choice--;                               // 배열 인덱스에 맞추기 위해 1 감소
 
-    if (coins[choice].amount_owned <= 0.0)                             // 보유량 확인
+    if (coins[choice].amount_owned <= 0.0)  // 보유량 확인
     {
         printf("You don't own any %s to sell.\n", coins[choice].name);
         return;
     }
 
-    printf("Do you want to sell all your %s? (1 for Yes, 0 for No): ", coins[choice].name);      // 판매 금액 또는 전량 매도 선택
+    double total_value = coins[choice].amount_owned * coins[choice].price;  // 보유량 및 현재 가격, 총 가치 출력
+    printf("You own %.4f %s, each priced at $%.2f (Total value: $%.2f).\n",
+        coins[choice].amount_owned, coins[choice].name, coins[choice].price, total_value);
+
+    printf("Do you want to sell all your %s? (1 for Yes, 0 for No): ", coins[choice].name); // 사용자 입력 : 판매 금액 또는 전량 매도 여부
     int sell_all;
     if (scanf_s("%d", &sell_all) != 1 || (sell_all != 0 && sell_all != 1))
     {
@@ -131,15 +132,14 @@ void sell_coin(Coin coins[], int size, double* cash) {
         return;
     }
 
-    if (sell_all == 1)                                                             // 전량 매도
+    if (sell_all == 1)              // 전량 매도
     {
-        double total_value = coins[choice].amount_owned * coins[choice].price;
         *cash += total_value;
         printf("You sold all %.4f %s for $%.2f.\n",
             coins[choice].amount_owned, coins[choice].name, total_value);
-        coins[choice].amount_owned = 0.0;                                          // 보유량 초기화
+        coins[choice].amount_owned = 0.0; // 보유량 초기화
     }
-    else                                                                           // 원하는 금액만 판매
+    else                    // 특정 금액만 판매
     {
         printf("Enter the amount to sell: ");
         if (scanf_s("%lf", &amount) != 1 || amount <= 0)
@@ -148,14 +148,14 @@ void sell_coin(Coin coins[], int size, double* cash) {
             return;
         }
 
-        double coin_amount = amount / coins[choice].price;                         // 판매할 개수 계산
+        double coin_amount = amount / coins[choice].price;
         if (coin_amount > coins[choice].amount_owned)
         {
             printf("Not enough coins to sell!\n");
             return;
         }
 
-        coins[choice].amount_owned -= coin_amount;                                 // 보유 개수 업데이트 및 현금 증가
+        coins[choice].amount_owned -= coin_amount;  // 보유 개수 업데이트 및 현금 증가
         *cash += amount;
 
         printf("You sold %.4f %s for $%.2f.\n", coin_amount, coins[choice].name, amount);
@@ -163,6 +163,8 @@ void sell_coin(Coin coins[], int size, double* cash) {
 
     printf("Remaining cash: $%.2f\n", *cash);
 }
+
+
 
 
 
@@ -195,20 +197,20 @@ void save_data(Coin coins[], int size, double cash) {
         return;
     }
 
-    fprintf(file, "%.2f\n", cash);
+    fprintf(file, "%.2f\n", cash); // 보유 현금 저장
     for (int i = 0; i < size; i++)
     {
-        fprintf(file, "%s %.2f %.4f\n", coins[i].name, coins[i].price, coins[i].amount_owned);
+        fprintf(file, "%s %.2f %.4f %.2f\n",
+            coins[i].name, coins[i].price, coins[i].amount_owned, coins[i].last_buy_price);
     }
 
     fclose(file);
     printf("Data saved successfully.\n");
 }
 
+
 void load_data(Coin coins[], int size, double* cash) {
     FILE* file;
-    double initial_cash = 10000.0;                                 // 최초 소지금
-
     if (fopen_s(&file, "data.txt", "r") != 0)
     {
         printf("No previous data found. Starting fresh.\n");
@@ -224,7 +226,10 @@ void load_data(Coin coins[], int size, double* cash) {
 
     for (int i = 0; i < size; i++)
     {
-        if (fscanf_s(file, "%s %lf %lf", coins[i].name, (unsigned)_countof(coins[i].name), &coins[i].price, &coins[i].amount_owned) != 3) {
+        if (fscanf_s(file, "%s %lf %lf %lf",
+            coins[i].name, (unsigned)_countof(coins[i].name),
+            &coins[i].price, &coins[i].amount_owned, &coins[i].last_buy_price) != 4)
+        {
             printf("Error reading coin data from file.\n");
             fclose(file);
             return;
@@ -232,20 +237,9 @@ void load_data(Coin coins[], int size, double* cash) {
     }
 
     fclose(file);
-
-    double total_assets = *cash;                                                 // 수익률 계산
-    for (int i = 0; i < size; i++)
-    {
-        total_assets += coins[i].amount_owned * coins[i].price;
-    }
-
-    double profit_rate = ((total_assets - initial_cash) / initial_cash) * 100.0; 
-
     printf("Data loaded successfully.\n");
-    printf("Initial Cash: $%.2f\n", initial_cash);
-    printf("Current Total Assets: $%.2f\n", total_assets);
-    printf("Profit Rate: %.2f%%\n", profit_rate);
 }
+
 
 void reset_data(Coin coins[], int size, double* cash) {                            // 초기 상태 설정
     *cash = 10000.0;                                                               // 초기 보유 현금
