@@ -14,33 +14,6 @@ typedef struct {
     double last_buy_price; // 마지막 구매 가격
 } Coin;
 
-void load_data(Coin* coins, int size, double* cash) {                // 코인의 데이터를 기존에 저장한 파일에서 읽어와 배열과 현금 포인터에 저장
-    FILE* file;                                                      // 파일 포인터 선언
-    if (fopen_s(&file, "data.txt", "r") != 0) {
-        printf("No previous data found. Starting fresh.\n");
-        return;
-    }
-
-    if (fscanf_s(file, "%lf", cash) != 1) {                          // 파일의 첫 번째 값을 cash 변수에 저장
-        printf("Error reading cash value from file.\n");
-        fclose(file);
-        return;
-    }
-
-    for (int i = 0; i < size; i++) {                                                       // coins 배열의 크기만큼 반복하여 각 코인의 데이터를 파일에서 읽음
-        if (fscanf_s(file, "%s %lf %lf %lf",
-            coins[i].name, (unsigned)_countof(coins[i].name),
-            &coins[i].price, &coins[i].amount_owned, &coins[i].last_buy_price) != 4) {
-            printf("Error reading coin data from file.\n");
-            fclose(file);
-            return;
-        }
-    }
-
-    fclose(file);                            // 파일 닫기
-    printf("Data loaded successfully.\n");
-}
-
 void display_coins(Coin* coins, int size) {         // 코인 정보를 출력
     printf("\n--- Current Prices ---\n");
     for (int i = 0; i < size; i++) {
@@ -201,6 +174,33 @@ void save_data(Coin* coins, int size, double cash) {           // 코인 데이터와 
 
     fclose(file);                                              // 파일 종료
     printf("Data saved successfully.\n");
+}
+
+void load_data(Coin* coins, int size, double* cash) {            // 코인의 데이터를 기존에 저장한 파일에서 읽어와 배열과 현금 포인터에 저장
+    FILE* file;                                                  // 파일 포인터 선언
+    if (fopen_s(&file, "data.txt", "r") != 0) {
+        printf("No previous data found. Starting fresh.\n");
+        return;
+    }
+
+    if (fscanf_s(file, "%lf", cash) != 1) {                      // 파일의 첫 번째 값을 cash 변수에 저장
+        printf("Error reading cash value from file.\n");
+        fclose(file);
+        return;
+    }
+
+    for (int i = 0; i < size; i++) {                             // coins 배열의 크기만큼 반복하여 각 코인의 데이터를 파일에서 읽음
+        if (fscanf_s(file, "%s %lf %lf %lf",
+            coins[i].name, (unsigned)_countof(coins[i].name),
+            &coins[i].price, &coins[i].amount_owned, &coins[i].last_buy_price) != 4) {
+            printf("Error reading coin data from file.\n");
+            fclose(file);
+            return;
+        }
+    }
+
+    fclose(file);                            // 파일 닫기
+    printf("Data loaded successfully.\n");
 }
 
 void reset_data(Coin* coins, int size, double* cash) {         // 데이터 초기화 후 파일 삭제
